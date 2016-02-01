@@ -1,0 +1,22 @@
+{
+  "name": "nbastatsapp",
+  "version": "0.0.1",
+  "description": "NBA stats app",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nbastatsapp/NBAStatsApp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nbastatsapp/NBAStatsApp/issues"
+  },
+  "homepage": "https://github.com/nbastatsapp/NBAStatsApp#readme",
+  "devDependencies": {
+    "electron-prebuilt": "^0.36.7"
+  }
+}
