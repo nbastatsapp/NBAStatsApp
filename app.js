@@ -1,5 +1,8 @@
+var remote = require('remote');     
+
 /*
 	constructGameDataUrl()
+	Constructs the ajax url for acquiring current game data
 */
 function constructGameDataUrl()
 {
@@ -24,6 +27,7 @@ function constructGameDataUrl()
 
 /*
 	doGetGameDataAjax()
+	performs the ajax request for game data and reroutes data for processing
 */
 function doGetGameDataAjax()
 {
@@ -35,7 +39,6 @@ function doGetGameDataAjax()
 		type: 'GET',
 		url: url,
 		dataType: "jsonp",
-		async: false,
 		success: function (data) 
 		{
 			processGameData(data);
@@ -49,6 +52,7 @@ function doGetGameDataAjax()
 
 /*
 	getGameDataJsonFragment()
+	returns the index of the json object that matches the passed in name
 */
 function getGameDataJsonFragment(arrayName, data)
 {
@@ -65,6 +69,7 @@ function getGameDataJsonFragment(arrayName, data)
 
 /*
 	getIndexFromHeaderArray()
+	returns the index of the data piece you want that cooresponds with the header
 */
 function getIndexFromHeaderArray(headerArray, headerName)
 {
@@ -81,6 +86,7 @@ function getIndexFromHeaderArray(headerArray, headerName)
 
 /*
 	getScoresFromTeamNamePair()
+	returns the score of the two passed in teams
 */
 function getScoreFromTeamNamePair(awayTeam, homeTeam, data)
 {
@@ -110,8 +116,8 @@ function getScoreFromTeamNamePair(awayTeam, homeTeam, data)
 	//if both are -1, the game hasn't started yet
 	if(!awayScore && !homeScore)
 	{
-		awayScore = '--';
-		homeScore = '--';
+		awayScore = '&#8213;';
+		homeScore = '&#8213;';
 	}
 
 	var scoreObj = {};
@@ -123,6 +129,7 @@ function getScoreFromTeamNamePair(awayTeam, homeTeam, data)
 
 /*
 	processGameData()
+	processes the data obtained in the game data ajax response
 */
 function processGameData(data)
 {
@@ -168,6 +175,16 @@ function processGameData(data)
 		var paddingEle = document.createElement('div');
 		paddingEle.className = 'gameplate--padding';
 
+		//create two divs for the team logos
+		// var awayLogoEle = document.createElement('div');
+		// var homeLogoEle = document.createElement('div');
+		// var awayImg = 'http://z.cdn.turner.com/nba/nba/.element/img/4.0/global/logos/512x512/bg.white/svg/' + awayTeam + '.svg';
+		// var homeImg = 'http://z.cdn.turner.com/nba/nba/.element/img/4.0/global/logos/512x512/bg.white/svg/' + homeTeam + '.svg';
+		// awayLogoEle.className = 'awaylogo';
+		// homeLogoEle.className = 'homelogo';
+		// awayLogoEle.style.backgroundImage = 'url("http://z.cdn.turner.com/nba/nba/.element/img/4.0/global/logos/512x512/bg.white/svg/NYK.svg")';
+		// homeLogoEle.style.backgroundImage = 'url("http://z.cdn.turner.com/nba/nba/.element/img/4.0/global/logos/512x512/bg.white/svg/NYK.svg")';
+
 		//create game plate
 		var gamePlate = document.createElement('a');
 
@@ -177,6 +194,8 @@ function processGameData(data)
 		gamePlate.appendChild(gameStatEle);
 		gamePlate.appendChild(gameTimeEle);
 		gamePlate.appendChild(paddingEle);
+		// gamePlate.appendChild(awayLogoEle);
+		// gamePlate.appendChild(homeLogoEle);
 
 		gamePlate.className = 'gameplate';
 		gamePlate.href = "#";
@@ -186,16 +205,42 @@ function processGameData(data)
 }
 
 /*
+	setupWindowButtons()
+	adds event listeners to close, minimize, and maximize buttons
+*/
+function setupWindowButtons()
+{
+	document.getElementById("min-btn").addEventListener("click", function (e) {
+	   var window = remote.getCurrentWindow();
+	   window.minimize(); 
+	});
+
+	document.getElementById("max-btn").addEventListener("click", function (e) {
+	   var window = remote.getCurrentWindow();
+	   window.maximize(); 
+	});
+
+	document.getElementById("close-btn").addEventListener("click", function (e) {
+	   var window = remote.getCurrentWindow();
+	   window.close();
+	}); 
+}
+
+/*
 	window.onload()
+	executes once on page load
 */
 window.onload = function(){
 	doGetGameDataAjax();
+	setupWindowButtons();
 }
 
 /*
 	window.setInterval()
+	executes every gamePlateUpdateTime milliseconds.
 */
+var gamePlateUpdateTime = 5000;
 window.setInterval(function(){
 	doGetGameDataAjax();
-}, 5000);
+}, gamePlateUpdateTime);
 

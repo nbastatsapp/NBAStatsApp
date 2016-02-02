@@ -3,6 +3,10 @@
 #games
 {
 	font-family: 'Oswald', sans-serif;
+	border-bottom: 1px solid black;
+	height: 130px;
+	vertical-align: middle;
+	text-align: center;
 
 	.gameplate
 	{
@@ -10,9 +14,15 @@
 		display: inline-block;
 		width: 120px;
 		text-align: center;
-		margin-right: 3px;
+		margin: 5px 3px;
 		color: #222222;
 		text-decoration: none;
+
+		&:hover
+		{
+			margin: 0 3px;
+			background-color: red;
+		}
 
 		h3
 		{
@@ -36,5 +46,23 @@
 		{
 			height: 20px;
 		}
+/* 
+		.awaylogo{
+			width: 60px;
+			height: 60px;
+			display: inline-block;
+			position: relative;
+			margin-top: -80px;
+			z-index: -1;
+		}
+		.homelogo{
+			width: 60px;
+			height: 60px;
+			display: inline-block;
+			float: right;
+			position: relative;
+			margin-top: -41px;
+			z-index: -1;
+		} */
 	}
 }
