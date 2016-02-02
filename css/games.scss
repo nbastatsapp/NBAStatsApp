@@ -1,0 +1,40 @@
+@import url(https://fonts.googleapis.com/css?family=Oswald);
+
+#games
+{
+	font-family: 'Oswald', sans-serif;
+
+	.gameplate
+	{
+		border: 1px solid gray;
+		display: inline-block;
+		width: 120px;
+		text-align: center;
+		margin-right: 3px;
+		color: #222222;
+		text-decoration: none;
+
+		h3
+		{
+			margin-top:10px;
+			margin-bottom: -10px;
+			.at
+			{
+				font-size: 12px;
+				color: #999999;
+			}
+		}
+
+		p
+		{
+			margin-top:5px;
+			margin-bottom: -5px;
+			font-size: 14px;
+		}
+
+		&--padding
+		{
+			height: 20px;
+		}
+	}
+}
