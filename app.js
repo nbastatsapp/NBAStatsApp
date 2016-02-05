@@ -133,10 +133,8 @@ function getScoreFromTeamNamePair(awayTeam, homeTeam, data)
 */
 function processGameData(data)
 {
-	//first, let's clear out the current game plates
-	document.getElementById('games').innerHTML = '';
-
-	var gamesContainer = document.getElementById('games');
+	var gamesContainer = document.getElementById('gameplate-wrapper');
+	gamesContainer.innerHTML = '';
 	var idx = getGameDataJsonFragment('GameHeader', data);
 
 	for(var i = 0; i < data.resultSets[idx].rowSet.length; i++)
@@ -176,14 +174,6 @@ function processGameData(data)
 		paddingEle.className = 'gameplate--padding';
 
 		//create two divs for the team logos
-		// var awayLogoEle = document.createElement('div');
-		// var homeLogoEle = document.createElement('div');
-		// var awayImg = 'http://z.cdn.turner.com/nba/nba/.element/img/4.0/global/logos/512x512/bg.white/svg/' + awayTeam + '.svg';
-		// var homeImg = 'http://z.cdn.turner.com/nba/nba/.element/img/4.0/global/logos/512x512/bg.white/svg/' + homeTeam + '.svg';
-		// awayLogoEle.className = 'awaylogo';
-		// homeLogoEle.className = 'homelogo';
-		// awayLogoEle.style.backgroundImage = 'url("http://z.cdn.turner.com/nba/nba/.element/img/4.0/global/logos/512x512/bg.white/svg/NYK.svg")';
-		// homeLogoEle.style.backgroundImage = 'url("http://z.cdn.turner.com/nba/nba/.element/img/4.0/global/logos/512x512/bg.white/svg/NYK.svg")';
 
 		//create game plate
 		var gamePlate = document.createElement('a');
@@ -194,8 +184,6 @@ function processGameData(data)
 		gamePlate.appendChild(gameStatEle);
 		gamePlate.appendChild(gameTimeEle);
 		gamePlate.appendChild(paddingEle);
-		// gamePlate.appendChild(awayLogoEle);
-		// gamePlate.appendChild(homeLogoEle);
 
 		gamePlate.className = 'gameplate';
 		gamePlate.href = "#";
@@ -226,14 +214,23 @@ function setupWindowButtons()
 	}); 
 }
 
+
+
 /*
 	window.onload()
 	executes once on page load
 */
-window.onload = function(){
+$(document).ready(function () {
 	doGetGameDataAjax();
 	setupWindowButtons();
-}
+
+	$('#games--scroll-left').click(function(){
+		$("#gameplate-wrapper").animate({marginLeft: '+=130'}, 'fast');
+	});
+	$('#games--scroll-right').click(function(){
+		$("#gameplate-wrapper").animate({marginLeft: '-=130'}, 'fast');
+	});
+});
 
 /*
 	window.setInterval()
