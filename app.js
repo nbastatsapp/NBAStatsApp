@@ -214,7 +214,71 @@ function setupWindowButtons()
 	}); 
 }
 
+function getElementPosition(el)
+{
+	for (var lx=0, ly=0;
+         el != null;
+         lx += el.offsetLeft, ly += el.offsetTop, el = el.offsetParent);
+    return {x: lx,y: ly};
+}
 
+function isAllowedToScroll(direction)
+{
+	if(direction == 'left')
+	{
+		var firstGamePlate = document.getElementsByClassName('gameplate')[0];
+		var pos = getElementPosition(firstGamePlate);
+		if( pos.x <= 30 )
+		{
+			if(pos.x >= -98)
+			{
+				if(pos.x < 0)
+				{
+					var goalStoppingPoint = 30;
+					var currentPoint = pos.x;
+					var calculatedMoveDistance = Math.abs(currentPoint) + goalStoppingPoint + 5;
+					var distanceStr = '+=' + calculatedMoveDistance;
+					return {canscroll: true, distance: distanceStr};
+				}
+				else
+				{
+					var calculatedMoveDistance = 30 - pos.x + 5;
+					var distanceStr = '+=' + calculatedMoveDistance;
+					return {canscroll: true, distance: distanceStr};
+				}
+			}
+			return {canscroll: true, distance: '+=128'};
+		}
+		else
+		{
+			return {canscroll: false, distance: ''};
+		}
+	}
+	else if(direction == 'right')
+	{
+		
+		var lastGamePlateArr = document.getElementsByClassName('gameplate');
+		var lastGamePlate = lastGamePlateArr[lastGamePlateArr.length - 1];
+		var pos = getElementPosition(lastGamePlate);
+		if(pos.x + 120 >= $(window).width() - 30)
+		{
+			if(pos.x + 120 <= $(window).width() +98 )
+			{
+				var goalStoppingPoint = $(window).width() - 30;
+				var currentPoint = pos.x + 120;
+				var calculatedMoveDistance = currentPoint - goalStoppingPoint + 1 + 5;
+				var distanceStr = '-=' + calculatedMoveDistance;
+				return {canscroll: true, distance: distanceStr};
+			}
+			return {canscroll: true, distance: '-=128'};
+		}
+		else
+		{
+			return {canscroll: false, distance: ''};
+		}
+	}
+	return {canscroll: false, distance: ''}
+}
 
 /*
 	window.onload()
@@ -224,11 +288,27 @@ $(document).ready(function () {
 	doGetGameDataAjax();
 	setupWindowButtons();
 
+	//handlers for gameplate scrolling
+	var animating = false;
 	$('#games--scroll-left').click(function(){
-		$("#gameplate-wrapper").animate({marginLeft: '+=130'}, 'fast');
+		var canScroll = isAllowedToScroll('left');
+		if(!animating && canScroll.canscroll)
+		{
+			animating = true;
+			$("#gameplate-wrapper").animate({marginLeft: canScroll.distance}, 'fast', function(){
+				animating = false;
+			});
+		}
 	});
 	$('#games--scroll-right').click(function(){
-		$("#gameplate-wrapper").animate({marginLeft: '-=130'}, 'fast');
+		var canScroll = isAllowedToScroll('right');
+		if(!animating && canScroll.canscroll)
+		{
+			animating = true;
+			$("#gameplate-wrapper").animate({marginLeft: canScroll.distance}, 'fast', function(){
+				animating = false;
+			});
+		}
 	});
 });
 
