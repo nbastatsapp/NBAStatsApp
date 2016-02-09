@@ -262,14 +262,40 @@ function isAllowedToScroll(direction)
 	return {canscroll: false, distance: ''}
 }
 
+var animating = false;
+function scrollLeft()
+{
+	var canScroll = isAllowedToScroll('left');
+	if(!animating && canScroll.canscroll)
+	{
+		animating = true;
+		$("#gameplate-wrapper").animate({marginLeft: canScroll.distance}, 'fast', function(){
+			animating = false;
+		});
+	}
+}
+
+function scrollRight()
+{
+	var canScroll = isAllowedToScroll('right');
+	if(!animating && canScroll.canscroll)
+	{
+		animating = true;
+		$("#gameplate-wrapper").animate({marginLeft: canScroll.distance}, 'fast', function(){
+			animating = false;
+		});
+	}
+}
 
 
 
 
 
+//export functions needed in other files
 module.exports = {
     doGetGameDataAjax: doGetGameDataAjax,
-    isAllowedToScroll: isAllowedToScroll
+    scrollLeft: scrollLeft,
+    scrollRight: scrollRight
 };
 
 

@@ -32,26 +32,11 @@ $(document).ready(function () {
 	setupWindowButtons();
 
 	//handlers for gameplate scrolling
-	var animating = false;
 	$('#games--scroll-left').click(function(){
-		var canScroll = games.isAllowedToScroll('left');
-		if(!animating && canScroll.canscroll)
-		{
-			animating = true;
-			$("#gameplate-wrapper").animate({marginLeft: canScroll.distance}, 'fast', function(){
-				animating = false;
-			});
-		}
+		games.scrollLeft();
 	});
 	$('#games--scroll-right').click(function(){
-		var canScroll = games.isAllowedToScroll('right');
-		if(!animating && canScroll.canscroll)
-		{
-			animating = true;
-			$("#gameplate-wrapper").animate({marginLeft: canScroll.distance}, 'fast', function(){
-				animating = false;
-			});
-		}
+		games.scrollRight();
 	});
 });
 
