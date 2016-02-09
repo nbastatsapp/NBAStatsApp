@@ -28,6 +28,7 @@
 	font-family: 'Oswald', sans-serif;
 	border-bottom: 1px solid black;
 	height: 130px;
+	background-color: #666;
     
 	#gameplate-wrapper
 	{
@@ -46,11 +47,14 @@
 			text-decoration: none;
 			white-space: normal;			
 			-webkit-user-select: none;
+			background-color: #eee;
+			-webkit-transition: background-color 0.2s, border 0.2s, border-radius 0.2s;
 
 			&:hover
 			{
 				margin: 0 3px;
-				background-color: red;
+				background-color: #d46;
+				border: 1px solid #d46;
 			}
 
 			h3
