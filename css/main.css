@@ -1,3 +1,11 @@
+@import url(https://fonts.googleapis.com/css?family=Oswald);
+
 @import url("normalize.css");
 @import url("titlebar.css");
 @import url("games.css");
+@import url("menu.css");
+
+#main-container
+{
+	width: 100%;
+}

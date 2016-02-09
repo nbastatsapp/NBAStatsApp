@@ -1,4 +1,27 @@
-@import url(https://fonts.googleapis.com/css?family=Oswald);
+@mixin scrollButton_Style()
+{
+	height: 130px;
+	position:fixed;
+	width: 30px;
+	background-color: gray;
+	opacity: 0.4;
+	cursor: pointer;
+	-webkit-transition: opacity 0.2s;
+	text-align: center;
+	-webkit-user-select: none;
+
+	span
+	{
+		color: white;
+		margin-top: 45px;
+		display: inline-block;
+	}
+
+	&:hover
+	{
+		opacity: 0.8;
+	}
+}
 
 #games
 {
@@ -21,7 +44,8 @@
 			margin: 5px 3px;
 			color: #222222;
 			text-decoration: none;
-			white-space: normal;
+			white-space: normal;			
+			-webkit-user-select: none;
 
 			&:hover
 			{
@@ -58,31 +82,15 @@
 	{
 		&-right
 		{
-			height: 130px;
-			width: 30px;
-			position:fixed;
+			@include scrollButton_Style();
 			right: 0;
-			background-color: gray;
-			opacity: 0.8;
-			cursor: pointer;
-			&:hover
-			{
-				opacity: 1;
-			}
 		}
 		&-left
 		{
-			height: 130px;
-			position:fixed;
+			@include scrollButton_Style();
 			left: 0;
-			width: 30px;
-			background-color: gray;
-			opacity: 0.8;
-			cursor: pointer;
-			&:hover
-			{
-				opacity: 1;
-			}
+
+			
 		}
 	}
 }
